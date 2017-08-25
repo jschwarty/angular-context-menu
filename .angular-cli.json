@@ -58,7 +58,8 @@
     "component": {
       "spec": false,
       "inlineStyle": true,
-      "inlineTemplate": true
+      "inlineTemplate": true,
+      "changeDetection": "OnPush"
     },
     "directive": {
       "spec": false
