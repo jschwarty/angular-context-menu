@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { AppState } from './+state/app.interfaces';
 import { Store } from '@ngrx/store';
+import { ContextMenuState } from './+state/context-menu.interfaces';
 
 @Directive({
   selector: '[ngxContextMenu]'
@@ -11,7 +11,7 @@ export class ContextMenuDirective {
   @HostListener('contextmenu', ['$event'])
   onBrowserContextMenu(event) {
     this.store.dispatch({
-      type: 'REQUEST_CONTEXT_MENU', payload: {
+      type: 'OPEN_CONTEXT_MENU', payload: {
         componentType: this.ngxContextMenu,
         mouseX: event.clientX,
         mouseY: event.clientY
@@ -20,6 +20,6 @@ export class ContextMenuDirective {
     return false;
   }
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<ContextMenuState>) {
   }
 }

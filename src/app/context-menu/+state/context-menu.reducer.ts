@@ -1,20 +1,16 @@
-import { App } from './app.interfaces';
-import { AppAction } from './app.actions';
+import { ContextMenuAction } from './context-menu.actions';
+import { ContextMenu } from './context-menu.interfaces';
+import { contextMenuInitialState } from './context-menu.init';
 
-export function appReducer(state: App, action: AppAction): App {
+export function contextMenuReducer(state: ContextMenu = contextMenuInitialState, action: ContextMenuAction): ContextMenu {
   switch(action.type) {
-    case 'REQUEST_CONTEXT_MENU': {
-      return {
-        ...state,
-        contextMenuType: action.payload.componentType,
-        mouseX: action.payload.mouseX,
-        mouseY: action.payload.mouseY
-      };
-    }
     case 'OPEN_CONTEXT_MENU': {
       return {
         ...state,
-        contextMenuIsOpen: true
+        contextMenuIsOpen: true,
+        contextMenuType: action.payload.componentType,
+        mouseX: action.payload.mouseX,
+        mouseY: action.payload.mouseY
       }
     }
     case 'CLOSE_CONTEXT_MENU': {

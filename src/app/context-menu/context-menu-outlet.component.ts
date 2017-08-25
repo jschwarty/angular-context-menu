@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy, Component, ComponentFactoryResolver, OnDestroy, ViewChild,
   ViewContainerRef, HostListener,
 } from '@angular/core';
-import { AppState } from './+state/app.interfaces';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
+import { ContextMenuState } from './+state/context-menu.interfaces';
 
 @Component({
   selector: 'app-context-menu-outlet',
@@ -45,21 +45,20 @@ export class ContextMenuOutletComponent implements OnDestroy {
     this.closeContextMenu();
     return false;
   }
-  contextMenuIsOpen = this.store.select(s => s.app.contextMenuIsOpen);
-  mouseX = this.store.select(s => s.app.mouseX);
-  mouseY = this.store.select(s => s.app.mouseY);
+  contextMenuIsOpen = this.store.select(s => s.contextMenu.contextMenuIsOpen);
+  mouseX = this.store.select(s => s.contextMenu.mouseX);
+  mouseY = this.store.select(s => s.contextMenu.mouseY);
   componentRef;
   subscription: Subscription;
 
-  constructor(private store: Store<AppState>,
+  constructor(private store: Store<ContextMenuState>,
               private cfr: ComponentFactoryResolver) {
-    this.subscription = this.store.select(s => s.app.contextMenuType)
+    this.subscription = this.store.select(s => s.contextMenu.contextMenuType)
       .subscribe(component => {
-        if (component !== null) {
+        if (component) {
           this.clear();
           const factory = this.cfr.resolveComponentFactory(component);
           this.componentRef = this.contentViewContainerRef.createComponent(factory);
-          this.store.dispatch({type: 'OPEN_CONTEXT_MENU'});
         }
       });
   }
